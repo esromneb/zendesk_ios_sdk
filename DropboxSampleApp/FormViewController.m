@@ -35,6 +35,8 @@
     description.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     description.scrollEnabled = NO;
     description.delegate = self;
+    
+    cells = [[NSMutableArray alloc] initWithObjects:[NSNull null], [NSNull null], [NSNull null], nil];
 }
 
 
@@ -126,8 +128,14 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	UITableViewCell * cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
-	
+
+    // Return an existing cell if we've already built it
+    UITableViewCell *cell = [cells objectAtIndex:indexPath.row];
+    if((id)cell != [NSNull null])
+        return cell;
+    
+    cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
+    
 	switch (indexPath.row) {
 		case 0:
 		{
@@ -157,6 +165,10 @@
 		default:
 			break;
 	}
+
+    // save it so we can reuse later
+    [cells insertObject:cell atIndex:indexPath.row];
+    
     return cell;
 }
 

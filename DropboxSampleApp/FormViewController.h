@@ -15,6 +15,8 @@
 	UITextField *subject;
 	UITextView *description;
     
+    NSMutableArray *cells;
+    
     ZendeskDropbox *dropbox;
 }
 
